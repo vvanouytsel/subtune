@@ -15,5 +15,6 @@
     </g>
     <path d="M134 46 C160 54 178 72 170 106" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round"/>
   </g>
-  <text x="208" y="131" fill="#F3F1FF" font-family="'Segoe UI Variable Display','Segoe UI',Inter,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="92" font-weight="600" letter-spacing="-2">Subtune</text>
+  <!-- Mid-tone purple: at least 4:1 contrast on both white and GitHub's dark background. -->
+  <text x="208" y="131" fill="#7B6CF2" font-family="'Segoe UI Variable Display','Segoe UI',Inter,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="92" font-weight="600" letter-spacing="-2">Subtune</text>
 </svg>

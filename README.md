@@ -1,8 +1,5 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/wordmark-dark.svg">
-    <img src="assets/wordmark-light.svg" alt="Subtune" width="380">
-  </picture>
+  <img src="assets/wordmark.svg" alt="Subtune" width="380">
 </p>
 
 <p align="center">
