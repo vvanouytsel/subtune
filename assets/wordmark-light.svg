@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="600" height="200" role="img" aria-label="Subtune">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8B7CF8"/>
+      <stop offset="1" stop-color="#4A3CC9"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20 20) scale(0.625)">
+    <rect x="8" y="8" width="240" height="240" rx="56" fill="url(#bg)"/>
+    <g fill="#fff">
+      <ellipse cx="112" cy="122" rx="28" ry="21" transform="rotate(-22 112 122)"/>
+      <rect x="128" y="40" width="13" height="84" rx="6.5"/>
+      <rect x="56" y="162" width="144" height="20" rx="10"/>
+      <rect x="84" y="196" width="88" height="20" rx="10" fill-opacity="0.7"/>
+    </g>
+    <path d="M134 46 C160 54 178 72 170 106" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round"/>
+  </g>
+  <text x="208" y="131" fill="#1E1A3D" font-family="'Segoe UI Variable Display','Segoe UI',Inter,-apple-system,'Helvetica Neue',Arial,sans-serif" font-size="92" font-weight="600" letter-spacing="-2">Subtune</text>
+</svg>
