@@ -37,6 +37,13 @@ static partial class Lrc
     [GeneratedRegex(@"\[(\d+):(\d+(?:\.\d+)?)\]")]
     private static partial Regex Timestamp();
 
+    // Per-word timings from "enhanced" LRC, e.g. "<00:12.34>word". We show whole lines only.
+    [GeneratedRegex(@"<\d+:\d+(?:\.\d+)?>")]
+    private static partial Regex WordTimestamp();
+
+    [GeneratedRegex(@"\s{2,}")]
+    private static partial Regex ExtraSpaces();
+
     public static List<LyricLine> Parse(string lrc)
     {
         var lines = new List<LyricLine>();
@@ -45,7 +52,7 @@ static partial class Lrc
             var stamps = Timestamp().Matches(raw);
             if (stamps.Count == 0)
                 continue; // metadata like [ar:...] or plain text
-            var text = Timestamp().Replace(raw, "").Trim();
+            var text = ExtraSpaces().Replace(WordTimestamp().Replace(Timestamp().Replace(raw, ""), ""), " ").Trim();
             foreach (Match m in stamps)
             {
                 var seconds = int.Parse(m.Groups[1].Value) * 60
