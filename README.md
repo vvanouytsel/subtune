@@ -9,6 +9,16 @@ alt-tabbing to Spotify.
 - Resizable: the text scales with the box
 - Light: event-driven, wakes up once per lyric line; about 0.3% of one CPU core and ~17 MB of private memory
 
+## Install
+
+```bash
+powershell -ExecutionPolicy Bypass -File install.ps1
+```
+
+This builds a single `Subtune.exe` into `%LOCALAPPDATA%\Programs\Subtune`, puts a **Subtune** icon on
+your desktop and in the Start menu, and starts it. Run it again after pulling changes to update.
+Double-clicking the icon while Subtune is already running just brings the lyrics back.
+
 ## Controls
 
 Hotkeys work from inside games. If another app already owns a combo, Subtune falls back to the

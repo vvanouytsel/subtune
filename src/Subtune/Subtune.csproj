@@ -9,11 +9,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <Version>0.1.0</Version>
+    <ApplicationIcon>Subtune.ico</ApplicationIcon>
 
     <!-- A background app: no need for server or background-GC threads. Keeps RAM low. -->
     <ServerGarbageCollection>false</ServerGarbageCollection>
     <ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Subtune.ico" LogicalName="Subtune.ico" />
+  </ItemGroup>
 
 </Project>

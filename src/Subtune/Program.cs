@@ -7,13 +7,17 @@ static class Program
     [STAThread]
     static void Main(string[] args)
     {
-        using var mutex = new Mutex(true, @"Local\Subtune.SingleInstance", out bool firstInstance);
+        // Starting Subtune again (e.g. the desktop icon) pokes the running copy instead.
+        using var poke = new EventWaitHandle(false, EventResetMode.AutoReset, @"Local\Subtune.Poke", out bool firstInstance);
         if (!firstInstance)
+        {
+            poke.Set();
             return;
+        }
 
         Log.Start();
         ApplicationConfiguration.Initialize();
-        Application.Run(new TrayApp(ParseDemo(args)));
+        Application.Run(new TrayApp(ParseDemo(args), poke));
     }
 
     // --demo [seconds]: fake-play a known song so the overlay can be tried without Spotify.

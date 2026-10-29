@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Drawing.Drawing2D;
 using Microsoft.Win32;
 
 namespace Subtune;
@@ -32,7 +31,7 @@ sealed class TrayApp : ApplicationContext
     string? _flash;
     long _flashStarted;
 
-    public TrayApp(double? demoStart)
+    public TrayApp(double? demoStart, WaitHandle poke)
     {
         _overlay = new Overlay(_settings);
         _ui = SynchronizationContext.Current ?? new WindowsFormsSynchronizationContext();
@@ -76,6 +75,7 @@ sealed class TrayApp : ApplicationContext
         _lineTimer.Tick += (_, _) => UpdateLine();
         _player.Changed += () => _ui.Post(_ => UpdateLine(), null);
         _ = StartPlayerAsync();
+        ThreadPool.RegisterWaitForSingleObject(poke, (_, _) => _ui.Post(_ => OnStartedAgain(), null), null, -1, false);
 
         Flash($"Subtune is running · {moveKey ?? "tray menu"} to move or resize");
         Log.Write($"started (hotkeys: {toggleKey}, {moveKey}, {soonerKey}, {laterKey})");
@@ -207,6 +207,13 @@ sealed class TrayApp : ApplicationContext
 
     // ---- actions ----
 
+    void OnStartedAgain()
+    {
+        if (!_settings.LyricsShown)
+            ToggleLyrics();
+        Flash("Subtune is already running · find it in the tray");
+    }
+
     void ToggleLyrics()
     {
         _settings.LyricsShown = !_settings.LyricsShown;
@@ -293,27 +300,10 @@ sealed class TrayApp : ApplicationContext
 
     static string Truncate(string s, int max) => s.Length <= max ? s : s[..(max - 1)] + "…";
 
-    /// <summary>Two subtitle bars on a rounded square, drawn at startup so no .ico file is needed.</summary>
+    /// <summary>The app icon (embedded Subtune.ico) at the size the tray wants.</summary>
     static Icon CreateIcon()
     {
-        using var bitmap = new Bitmap(32, 32);
-        using (var g = Graphics.FromImage(bitmap))
-        {
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            using var square = new GraphicsPath();
-            square.AddArc(1, 1, 12, 12, 180, 90);
-            square.AddArc(19, 1, 12, 12, 270, 90);
-            square.AddArc(19, 19, 12, 12, 0, 90);
-            square.AddArc(1, 19, 12, 12, 90, 90);
-            square.CloseFigure();
-            using var fill = new SolidBrush(Color.FromArgb(83, 74, 183));
-            g.FillPath(fill, square);
-            using var bar = new Pen(Color.White, 3.5f) { StartCap = LineCap.Round, EndCap = LineCap.Round };
-            g.DrawLine(bar, 7, 17, 25, 17);
-            g.DrawLine(bar, 11, 24, 21, 24);
-            using var note = new SolidBrush(Color.White);
-            g.FillEllipse(note, 12, 6, 6, 5);
-        }
-        return Icon.FromHandle(bitmap.GetHicon());
+        using var stream = typeof(TrayApp).Assembly.GetManifestResourceStream("Subtune.ico")!;
+        return new Icon(stream, SystemInformation.SmallIconSize);
     }
 }
