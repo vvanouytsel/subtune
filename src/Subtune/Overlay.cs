@@ -96,7 +96,7 @@ sealed class Overlay : Form
             var cp = base.CreateParams;
             cp.ExStyle |= WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST | WS_EX_NOACTIVATE;
             if (!_editing)
-                cp.ExStyle |= WS_EX_TRANSPARENT; // clicks fall through to the game
+                cp.ExStyle |= WS_EX_TRANSPARENT; // clicks fall through to whatever is underneath
             return cp;
         }
     }
@@ -184,7 +184,7 @@ sealed class Overlay : Form
         }
     }
 
-    // Borderless games sit on top too; re-assert our place now and then.
+    // Other always-on-top and full-screen windows compete for the top spot; re-assert ours now and then.
     void KeepOnTop() =>
         SetWindowPos(Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
 

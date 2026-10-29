@@ -2,7 +2,7 @@ using static Subtune.Native;
 
 namespace Subtune;
 
-/// <summary>Global hotkeys, so the overlay can be controlled from inside a game.</summary>
+/// <summary>Global hotkeys, so the overlay can be controlled while another app has focus.</summary>
 sealed class Hotkeys : NativeWindow, IDisposable
 {
     readonly Dictionary<int, Action> _actions = [];
